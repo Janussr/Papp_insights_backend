@@ -1,9 +1,9 @@
 import pandas as pd
 from . import models
 
-#df = pd.read_csv('data/papp_kgslyngby.csv', sep=";")
+df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=";")
 
-#print(df)
+print(df)
 
 
 def create_report():
