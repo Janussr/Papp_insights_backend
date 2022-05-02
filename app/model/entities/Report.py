@@ -4,7 +4,7 @@ class Report():
 
     def __init__(self, report_name, parking_areas, parking_categories, time_filter):
         self.report_name = report_name
-        self.time_filter = TimeFilter(xxx,xxx,xxx)
+        #self.time_filter = TimeFilter(xxx,xxx,xxx)
         self.parking_areas = []         
         self.parking_categories = []        
         for parking_category in parking_categories:
