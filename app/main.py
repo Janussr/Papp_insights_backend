@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from . import report_service
+from . import report_service, parkingarea_service
 
 app = FastAPI(title="FastAPI, Docker, and Traefik")
 
@@ -26,3 +26,7 @@ def read_root():
 @app.get("/report")
 def get_report():
     return {"report": report_service.create_report()}
+
+@app.get("/parkingareas")
+def get_parking_areas():
+    return {"parkingareas": parkingarea_service.all_parking_areas()}
