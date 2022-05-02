@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from .data import report_service
+from . import report_service
 
 app = FastAPI(title="FastAPI, Docker, and Traefik")
 
