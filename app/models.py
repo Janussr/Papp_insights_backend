@@ -1,8 +1,11 @@
 class Report():
-    def __init__(self, report_name, parking_areas, parking_categories, time_filter):
+    def __init__(self, report_name, parking_areas, parking_categories, time_filter=None):
         self.report_name = report_name
         #self.time_filter = TimeFilter(xxx,xxx,xxx)
-        self.parking_areas = []         
+        self.parking_areas = []
+        for parking_area in parking_areas:
+            self.parking_areas.append(parking_area)
+
         self.parking_categories = []        
         for parking_category in parking_categories:
             new_category = ParkingCategory(

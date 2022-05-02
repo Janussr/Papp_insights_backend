@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from . import report_service
 
 app = FastAPI(title="FastAPI, Docker, and Traefik")
 
@@ -19,9 +20,9 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"hello": "world"}
+    return {"Hello": "World"}
 
 
 @app.get("/report")
 def get_report():
-    return {"report": "belægningsgrad"}
+    return {"report": report_service.create_report()}
