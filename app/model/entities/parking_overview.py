@@ -1,3 +1,5 @@
+from parking_category import ParkingCategory
+
 class ParkingOverview():
 
     def __init__(self, booth_type, parking_categories):
