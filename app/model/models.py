@@ -1,5 +1,4 @@
 class Report():
-
     def __init__(self, report_name, parking_areas, parking_categories, time_filter):
         self.report_name = report_name
         #self.time_filter = TimeFilter(xxx,xxx,xxx)
@@ -18,7 +17,6 @@ class ParkingCategory():
         self.category_description = category_description
 
 class ParkingOverview():
-
     def __init__(self, booth_type, parking_categories):
         self.booth_type = booth_type
         self.parking_categories = []
