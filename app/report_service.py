@@ -26,6 +26,7 @@ def calculate_report():
 
 
 def save_report(report):
-    file = open('app/data/reports.csv', 'w')
+    file = open('app/data/reports.csv', 'a')
     writer = csv.writer(file)
     writer.writerow(report)
+    file.close()
