@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+
 class Report():
     def __init__(self, report_name, parking_areas, parking_categories, time_filter=None):
         self.report_name = report_name
@@ -29,3 +31,9 @@ class ParkingOverview():
                 parking_category.category_description,
             )
             self.parking_categories.append(new_category)
+
+
+class ReportModel(BaseModel):
+    report_name: str
+    parking_areas: list
+    parking_categories: list
