@@ -27,7 +27,7 @@ def read_root():
 
 @app.get("/report/{id}")
 def get_report(id: int, q:Optional[int] = None):
-    return {"report": report_service.get_report(id)}
+    return report_service.get_report(id)
 
 @app.get("/reports")
 def get_reports():

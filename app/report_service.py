@@ -5,10 +5,10 @@ from . import models
 df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=";")
 
 def get_report(id):
-    reports_df = pd.read_csv('app/data/reports.csv')
-    print(reports_df.head())
-    report = reports_df[reports_df['id'] == f'{id}']
-    print(report)
+    df = pd.read_csv('app/data/reports.csv', sep=',')
+    report_df = df[df['id'] == id]
+    report = pd.Series.to_dict(report_df.iloc[0])
+    return report
 
 def save_report(id, name, parking_areas, categories):
     with open('app/data/reports.csv', 'a') as file:
@@ -22,7 +22,7 @@ def get_all_reports():
     #print(df)
     with open('app/data/reports.csv') as file:
         reports = []
-        reader = csv.reader(file, delimiter = ';')
+        reader = csv.reader(file, delimiter = ',')
         next(reader)
         for row in reader:
             #reports.append(models.Report(row[0], row[1], row[2], row[3]))
