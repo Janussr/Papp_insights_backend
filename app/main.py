@@ -26,7 +26,7 @@ def read_root():
 
 @app.get("/report")
 def get_report():
-    return {"report": report_service.create_report()}
+    return {"report": report_service.calculate_report()}
 
 @app.get("/parkingareas")
 def get_parking_areas():
@@ -36,4 +36,5 @@ Report = models.ReportModel
 
 @app.post("/report")
 def create_report(report: Report):
+    report_service.save_report(report.report_name)
     return report
