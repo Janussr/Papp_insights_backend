@@ -1,3 +1,4 @@
 id,name,parking_areas,categories
-1,report_01,"['O04 Nørgaardsvej 8', 'O01-A Lyngby Torv']","['Belægningsgrad']"
 
+
+1,report_01,"O04 Nørgaardsvej 8,O01-A Lyngby Torv",Belægningsgrad
