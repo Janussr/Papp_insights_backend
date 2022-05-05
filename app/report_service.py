@@ -27,3 +27,4 @@ def save_report(id, name, parking_areas, categories):
     with open('app/data/reports.csv', 'a') as file:
         writer=csv.writer(file, delimiter=';')
         writer.writerow([id, name, parking_areas, categories])
+ 
