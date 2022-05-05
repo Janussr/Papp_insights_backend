@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from . import report_service, parkingarea_service, models
@@ -24,9 +25,9 @@ def read_root():
     return {"Hello": "World"}
 
 
-@app.get("/report")
-def get_report():
-    return {"report": report_service.calculate_report()}
+@app.get("/report/{id}")
+def get_report(id: int, q:Optional[int] = None):
+    return {"report": report_service.get_report(id)}
 
 @app.get("/reports")
 def get_report():
