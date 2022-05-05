@@ -12,8 +12,10 @@ def get_report(id):
 
 def save_report(id, name, parking_areas, categories):
     with open('app/data/reports.csv', 'a') as file:
-        writer=csv.writer(file, delimiter=';')
-        writer.writerow([id, name, parking_areas, categories])
+        writer=csv.writer(file, delimiter=',')
+        string_p_areas = ','.join(parking_areas)
+        string_categories = ','.join(categories)
+        writer.writerow([str(id), name, string_p_areas, string_categories])
 
 def get_all_reports():
     #df = pd.read_csv('app/data/reports.csv')
