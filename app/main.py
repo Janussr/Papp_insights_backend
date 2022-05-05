@@ -30,7 +30,7 @@ def get_report(id: int, q:Optional[int] = None):
     return {"report": report_service.get_report(id)}
 
 @app.get("/reports")
-def get_report():
+def get_reports():
     return report_service.get_all_reports()
 
 
