@@ -28,6 +28,11 @@ def read_root():
 def get_report():
     return {"report": report_service.calculate_report()}
 
+@app.get("/reports")
+def get_report():
+    return report_service.get_all_reports()
+
+
 @app.get("/parkingareas")
 def get_parking_areas():
     return {"parkingareas": parkingarea_service.all_parking_areas()}

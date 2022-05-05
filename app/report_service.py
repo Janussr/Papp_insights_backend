@@ -4,9 +4,6 @@ from . import models
 
 df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=";")
 
-print(df)
-
-
 def calculate_report():
     p1 = models.ParkingCategory("Belægningsgrad", "59%")
     p2 = models.ParkingCategory("Overtrædelsesprocent", "7%")
@@ -27,4 +24,16 @@ def save_report(id, name, parking_areas, categories):
     with open('app/data/reports.csv', 'a') as file:
         writer=csv.writer(file, delimiter=';')
         writer.writerow([id, name, parking_areas, categories])
+
+def get_all_reports():
+    #df = pd.read_csv('app/data/reports.csv')
+    #print(df)
+    with open('app/data/reports.csv') as file:
+        reports = []
+        reader = csv.reader(file, delimiter = ';')
+        next(reader)
+        for row in reader:
+            #reports.append(models.Report(row[0], row[1], row[2], row[3]))
+            reports.append({'id':row[0], 'name':row[1], 'parking_areas':row[2], 'parking_categories':row[3]})
+    return reports
  
