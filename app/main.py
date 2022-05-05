@@ -29,7 +29,7 @@ def get_report():
     return {"report": report_service.calculate_report()}
 
 @app.get("/reports")
-def get_report():
+def get_reports():
     return report_service.get_all_reports()
 
 
