@@ -34,6 +34,7 @@ class ParkingOverview():
 
 
 class ReportModel(BaseModel):
+    id: int
     report_name: str
     parking_areas: list
     parking_categories: list
