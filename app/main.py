@@ -38,9 +38,9 @@ def get_reports():
 def get_parking_areas():
     return {"parkingareas": parkingarea_service.all_parking_areas()}
 
-Report = models.ReportModel
+Report = models.ReportFileModel
 
 @app.post("/report")
 def create_report(report: Report):
-    report_service.save_report(report.id, report.report_name, report.parking_areas, report.parking_categories)
+    report_service.save_report(report.id, report.report_name, report.parking_areas)
     return report

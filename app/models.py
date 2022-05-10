@@ -33,8 +33,19 @@ class ParkingOverview():
             self.parking_categories.append(new_category)
 
 
+class ParkingCategoryModel(BaseModel):
+    category: str
+    value: int
+
+class ParkingAreaModel(BaseModel):
+    parking_categories: list[ParkingCategoryModel]   
+
 class ReportModel(BaseModel):
     id: int
     report_name: str
+    parking_areas: list[ParkingAreaModel]
+
+class ReportFileModel(BaseModel):
+    id: int
+    report_name: str
     parking_areas: list
-    parking_categories: list

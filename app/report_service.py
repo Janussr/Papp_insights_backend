@@ -10,12 +10,11 @@ def get_report(id):
     report = pd.Series.to_dict(report_df.iloc[0])
     return report
 
-def save_report(id, name, parking_areas, categories):
+def save_report(id, name, parking_areas):
     with open('app/data/reports.csv', 'a') as file:
         writer=csv.writer(file, delimiter=',')
         string_p_areas = ','.join(parking_areas)
-        string_categories = ','.join(categories)
-        writer.writerow([str(id), name, string_p_areas, string_categories])
+        writer.writerow([str(id), name, string_p_areas])
 
 def get_all_reports():
     #df = pd.read_csv('app/data/reports.csv')
