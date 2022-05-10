@@ -3,9 +3,7 @@ import pandas as pd
 import models
 
 def get_report(id):
-    new_report = models.Report
-
-
+    
     df = pd.read_csv('data/reports.csv', sep=',')
     lyngby_df = pd.read_csv('data/papp_kgslyngby.csv', sep=';')
 
@@ -20,7 +18,7 @@ def get_report(id):
     parking_area_string = report.iloc[0].parking_areas
     parking_area_list = parking_area_string.split(',')
     for area in parking_area_list:
-        #Narrow datasets based on areas in report
+        #Narrow down datasets based on areas in report
         area_data = lyngby_df[lyngby_df["garageCode"].str.contains(area) == True]
         time_interval = area_data[area_data["time"].str.contains(time) == True]
 
@@ -29,18 +27,17 @@ def get_report(id):
         vehicle_count.append(int(time_interval.vehicleCount))
         free_spaces.append(int(time_interval.freeSpaces))
 
-        #Add to parking area object
-        new_parking_area = models.ParkingArea
-        new_parking_areas.append(new_parking_area)
+        #Create a parking category
+        parking_category = models.ParkingCategory('Belægningsgrad', vehicle_count)
 
-        for new_area in new_parking_areas:
-            new_area.name = area
+        #Create parking areas
+        for i in range(len(parking_area_list)):
+            new_parking_area = models.ParkingArea(i, parking_category)
+            new_parking_areas.append(new_parking_area)
 
-        #Add to new report
-        new_report.parking_areas = None
+    new_report = models.Report('navn', new_parking_areas)
 
     #return report.iloc[0]
-    return new_parking_areas[1].name
+    return new_parking_areas[0].name
 
 print(get_report(1))
-#get_report(1)

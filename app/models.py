@@ -8,26 +8,20 @@ class Report():
         for parking_area in parking_areas:
             new_parking_area = ParkingArea(
                 parking_area.name,
-                parking_area.parking_categories
+                parking_area.parking_category
             )
             parking_areas.append(new_parking_area)
 
 
 class ParkingCategory():
-    def __init__(self, category_name, category_description):
-        self.category_name = category_name
-        self.category_description = category_description
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
 
 class ParkingArea():
-    def __init__(self, name, parking_categories):
+    def __init__(self, name, parking_category):
         self.name = name
-        self.parking_categories = []        
-        for parking_category in parking_categories:
-            new_category = ParkingCategory(
-                parking_category.category_name,
-                parking_category.category_description,
-            )
-            self.parking_categories.append(new_category)
+        self.parking_category = parking_category
 
 class ParkingOverview():
     def __init__(self, booth_type, parking_categories):
@@ -47,7 +41,7 @@ class ParkingCategoryModel(BaseModel):
 
 class ParkingAreaModel(BaseModel):
     name: str
-    parking_categories: list[ParkingCategoryModel]   
+    parking_category: ParkingCategoryModel 
 
 class ReportModel(BaseModel):
     id: int
