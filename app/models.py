@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-class Report():
+class ReportOld():
     def __init__(self, report_name, parking_areas, time_filter=None):
         self.report_name = report_name
         #self.time_filter = TimeFilter(xxx,xxx,xxx)
@@ -12,7 +12,7 @@ class Report():
             )
             parking_areas.append(new_parking_area)
 
-class DataSheet:
+class Report:
     def __init__(self, report_name, parking_areas):
         self.report_name = report_name
         self.parking_areas = []
