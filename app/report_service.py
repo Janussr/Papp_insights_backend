@@ -5,25 +5,30 @@ from . import models
 df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=";")
 
 def get_report(id):
-    
     df = pd.read_csv('app/data/reports.csv', sep=',')
-    lyngby_df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=';')
+    new_parking_areas = []
 
+    #Get the specific report from the csv file
+    report = df[df['id'] == id]
+    #Create list of parking areas from the report
+    parking_area_string = report.iloc[0].parking_areas
+    parking_area_list = parking_area_string.split(',')
+    #Getting the name of the report
+    report_name = report.iloc[0].to_dict()['name']
+    #Calculate parking categories and apply them to each parking_area
+    new_parking_areas = calculate_categories(parking_area_list)
+    #Add the parking areas with the calculated categories to the report and return it
+    new_report = models.Report(report_name, new_parking_areas)
+    return new_report
+
+def calculate_categories(parking_areas):
+    lyngby_df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=';')
     time = "2022-01-01 00:00:05"
     total_spaces = []
     vehicle_count = []
     free_spaces = []
-
     new_parking_areas = []
-
-
-    report = df[df['id'] == id]
-    parking_area_string = report.iloc[0].parking_areas
-    parking_area_list = parking_area_string.split(',')
-    report_name = report.iloc[0].to_dict()['name']
-
-    for area in parking_area_list:
-        #Narrow down datasets based on areas in report
+    for area in parking_areas:
         area_data = lyngby_df[lyngby_df["garageCode"].str.contains(area) == True]
         time_interval = area_data[area_data["time"].str.contains(time) == True]
 
@@ -35,16 +40,11 @@ def get_report(id):
         #Create a parking category
         for i in range(len(total_spaces)):
             x = vehicle_count[i] / total_spaces[i] * 100
-            parking_category = models.ParkingCategory('Belægningsgrad', x)
+        parking_category = models.ParkingCategory('Belægningsgrad', x)
+        parking_area = models.ParkingArea(area, parking_category)
+        new_parking_areas.append(parking_area)
+        return new_parking_areas
 
-        #Create parking areas
-        new_parking_area = models.ParkingArea(area, parking_category)
-        new_parking_areas.append(new_parking_area)
-
-
-    new_report = models.Report(report_name, new_parking_areas)
-
-    return new_report
 
 def save_report(id, name, parking_areas):
     with open('app/data/reports.csv', 'a') as file:
