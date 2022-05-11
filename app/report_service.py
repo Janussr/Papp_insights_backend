@@ -21,6 +21,7 @@ def get_report(id):
     parking_area_string = report.iloc[0].parking_areas
     parking_area_list = parking_area_string.split(',')
     report_name = report.iloc[0].to_dict()['name']
+    
     for area in parking_area_list:
         #Narrow down datasets based on areas in report
         area_data = lyngby_df[lyngby_df["garageCode"].str.contains(area) == True]
