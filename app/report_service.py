@@ -16,9 +16,11 @@ def get_report(id):
 
     new_parking_areas = []
 
+
     report = df[df['id'] == id]
     parking_area_string = report.iloc[0].parking_areas
     parking_area_list = parking_area_string.split(',')
+    report_name = report.iloc[0].to_dict()['name']
     for area in parking_area_list:
         #Narrow down datasets based on areas in report
         area_data = lyngby_df[lyngby_df["garageCode"].str.contains(area) == True]
@@ -30,14 +32,16 @@ def get_report(id):
         free_spaces.append(int(time_interval.freeSpaces))
 
         #Create a parking category
-        parking_category = models.ParkingCategory('Belægningsgrad', vehicle_count)
+        for i in range(len(total_spaces)):
+            x = vehicle_count[i] / total_spaces[i] * 100
+            parking_category = models.ParkingCategory('Belægningsgrad', x)
 
         #Create parking areas
-        for i in range(len(parking_area_list)):
-            new_parking_area = models.ParkingArea(i, parking_category)
-            new_parking_areas.append(new_parking_area)
+        new_parking_area = models.ParkingArea(area, parking_category)
+        new_parking_areas.append(new_parking_area)
 
-    new_report = models.Report('navn', new_parking_areas)
+
+    new_report = models.DataSheet(report_name, new_parking_areas)
 
     return new_report
 

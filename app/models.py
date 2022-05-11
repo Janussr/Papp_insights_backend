@@ -12,6 +12,16 @@ class Report():
             )
             parking_areas.append(new_parking_area)
 
+class DataSheet:
+    def __init__(self, report_name, parking_areas):
+        self.report_name = report_name
+        self.parking_areas = []
+        for area in parking_areas:
+            new_area = ParkingArea(
+                area.name,
+                area.parking_category,
+            )
+            self.parking_areas.append(new_area)
 
 class ParkingCategory():
     def __init__(self, name, value):
