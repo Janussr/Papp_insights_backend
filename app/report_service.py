@@ -40,7 +40,7 @@ def calculate_categories(parking_areas):
 
         #Create a parking category
         for i in range(len(total_spaces)):
-            x = vehicle_count[i] / total_spaces[i] * 100
+            x = round((vehicle_count[i] / total_spaces[i] * 100), 2)
         parking_category = models.ParkingCategory('Belægningsgrad', x)
         new_parking_area = models.ParkingArea(area, parking_category)
         new_parking_areas.append(new_parking_area)
