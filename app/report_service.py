@@ -60,7 +60,7 @@ def get_all_reports():
         reader = csv.reader(file, delimiter = ',')
         next(reader)
         for row in reader:
-            #reports.append(models.Report(row[0], row[1], row[2], row[3]))
-            reports.append({'id':row[0], 'name':row[1], 'parking_areas':row[2], 'parking_categories':row[3]})
+            #reports.append(models.Report(row[0], row[1], row[2]))
+            reports.append({'id':row[0], 'name':row[1], 'parking_areas':row[2]})
     return reports
  
