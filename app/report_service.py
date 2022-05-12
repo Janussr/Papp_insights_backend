@@ -17,31 +17,34 @@ def get_report(id):
     report_date = report.iloc[0].to_dict()['date']
     #Calculate parking categories and apply them to each parking_area
     parking_areas = calculate_categories(parking_area_list, report_date)
-    print(len(parking_areas))
     #Add the parking areas with the calculated categories to the report and return it
     new_report = models.Report(report_name, parking_areas, report_date)
     return new_report
 
 def calculate_categories(parking_areas, date):
-    print(parking_areas)
     lyngby_df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=';')
     total_spaces = []
     vehicle_count = []
-    free_spaces = []
     new_parking_areas = []
+
     for area in parking_areas:
+        #Get data about each parking area on the specifie date
         area_data = lyngby_df[lyngby_df["garageCode"].str.contains(area) == True]
         time_interval = area_data[area_data["time"].str.contains(date) == True]
-        print(time_interval)
 
-        #Get the information needed to perform categories
-        total_spaces.append(int(time_interval.totalSpaces))
-        vehicle_count.append(int(time_interval.vehicleCount))
-        free_spaces.append(int(time_interval.freeSpaces))
+        #Group by vehicle_count and total_spaces and find the average vehicle count
+        grouped_vehicle_count = time_interval.groupby("garageCode")['vehicleCount'].mean()
+        grouped_total_spaces = time_interval.groupby("garageCode")['totalSpaces'].mean()
+        
+        #Get fetch the average vehicle count and total spaces from the groupBy Objects
+        count = int(grouped_vehicle_count.get(key=area))
+        vehicle_count.append(count)
+        spaces = int(grouped_total_spaces.get(key=area))
+        total_spaces.append(spaces)
 
-        #Create a parking category
+        #Create parking category and add it to parking area
         for i in range(len(total_spaces)):
-            x = round((vehicle_count[i] / total_spaces[i] * 100), 2)
+            x = (vehicle_count[i] / total_spaces[i] * 100)
         parking_category = models.ParkingCategory('Belægningsgrad', x)
         new_parking_area = models.ParkingArea(area, parking_category)
         new_parking_areas.append(new_parking_area)
@@ -55,14 +58,11 @@ def save_report(id, name, parking_areas, date):
         writer.writerow([str(id), name, string_p_areas, date])
 
 def get_all_reports():
-    #df = pd.read_csv('app/data/reports.csv')
-    #print(df)
     with open('app/data/reports.csv') as file:
         reports = []
         reader = csv.reader(file, delimiter = ',')
         next(reader)
         for row in reader:
-            #reports.append(models.Report(row[0], row[1], row[2]))
-            reports.append({'id':row[0], 'name':row[1], 'parking_areas':row[2]})
+            reports.append({'id':row[0], 'name':row[1], 'parking_areas':row[2], 'date':row[3]})
     return reports
  
