@@ -14,24 +14,25 @@ def get_report(id):
     parking_area_list = parking_area_string.split(',')
     #Getting the name of the report
     report_name = report.iloc[0].to_dict()['name']
+    report_date = report.iloc[0].to_dict()['date']
     #Calculate parking categories and apply them to each parking_area
-    parking_areas = calculate_categories(parking_area_list)
+    parking_areas = calculate_categories(parking_area_list, report_date)
     print(len(parking_areas))
     #Add the parking areas with the calculated categories to the report and return it
-    new_report = models.Report(report_name, parking_areas)
+    new_report = models.Report(report_name, parking_areas, report_date)
     return new_report
 
-def calculate_categories(parking_areas):
+def calculate_categories(parking_areas, date):
     print(parking_areas)
     lyngby_df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=';')
-    time = "2022-01-01 00:00:05"
     total_spaces = []
     vehicle_count = []
     free_spaces = []
     new_parking_areas = []
     for area in parking_areas:
         area_data = lyngby_df[lyngby_df["garageCode"].str.contains(area) == True]
-        time_interval = area_data[area_data["time"].str.contains(time) == True]
+        time_interval = area_data[area_data["time"].str.contains(date) == True]
+        print(time_interval)
 
         #Get the information needed to perform categories
         total_spaces.append(int(time_interval.totalSpaces))
@@ -47,11 +48,11 @@ def calculate_categories(parking_areas):
     return new_parking_areas
 
 
-def save_report(id, name, parking_areas):
+def save_report(id, name, parking_areas, date):
     with open('app/data/reports.csv', 'a') as file:
         writer=csv.writer(file, delimiter=',')
         string_p_areas = ','.join(parking_areas)
-        writer.writerow([str(id), name, string_p_areas])
+        writer.writerow([str(id), name, string_p_areas, date])
 
 def get_all_reports():
     #df = pd.read_csv('app/data/reports.csv')

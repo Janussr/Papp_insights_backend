@@ -1,2 +1,2 @@
-id,name,parking_areas
-1,this is a report name,"P4 Magasin / Fog,Microsoft Public"
+id,name,parking_areas,date
+1,report_01,"O04 Nørgaardsvej 8,O01-A Lyngby Torv",2022-01-01

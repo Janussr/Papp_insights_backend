@@ -13,9 +13,10 @@ class ReportOld():
             parking_areas.append(new_parking_area)
 
 class Report:
-    def __init__(self, report_name, parking_areas):
+    def __init__(self, report_name, parking_areas, date):
         self.report_name = report_name
         self.parking_areas = []
+        self.date = date
         for area in parking_areas:
             new_area = ParkingArea(
                 area.name,
@@ -62,3 +63,4 @@ class ReportFileModel(BaseModel):
     id: int
     report_name: str
     parking_areas: list
+    date: str
