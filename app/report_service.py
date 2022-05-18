@@ -1,11 +1,18 @@
 import pandas as pd
 import csv
-from . import models
+import sys
+import os
+current = os.path.dirname(os.path.realpath(__file__))
+# Getting the parent directory name where the current directory is present.
+parent = os.path.dirname(current)
+# adding the parent directory to the sys.path.
+sys.path.append(parent)
+import models
 
-df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=";")
+df = pd.read_csv('data/papp_kgslyngby.csv', sep=";")
 
 def get_report(id):
-    df = pd.read_csv('app/data/reports.csv', sep=',')
+    df = pd.read_csv('data/reports.csv', sep=',')
 
     #Get the specific report from the csv file
     report = df[df['id'] == id]
@@ -22,7 +29,7 @@ def get_report(id):
     return new_report
 
 def calculate_categories(parking_areas, date):
-    lyngby_df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=';')
+    lyngby_df = pd.read_csv('data/papp_kgslyngby.csv', sep=';')
     total_spaces = []
     vehicle_count = []
     new_parking_areas = []
@@ -52,13 +59,13 @@ def calculate_categories(parking_areas, date):
 
 
 def save_report(id, name, parking_areas, date):
-    with open('app/data/reports.csv', 'a') as file:
+    with open('data/reports.csv', 'a') as file:
         writer=csv.writer(file, delimiter=',')
         string_p_areas = ','.join(parking_areas)
         writer.writerow([str(id), name, string_p_areas, date])
 
 def get_all_reports():
-    with open('app/data/reports.csv') as file:
+    with open('data/reports.csv') as file:
         reports = []
         reader = csv.reader(file, delimiter = ',')
         next(reader)
