@@ -26,8 +26,9 @@ def read_root():
 
 
 @app.get("/report/{id}")
-def get_report(id: int, q:Optional[int] = None):
+def get_report(id: str, q: Optional[str] = None):
     return report_service.get_report(id)
+
 
 @app.get("/reports")
 def get_reports():
@@ -38,9 +39,13 @@ def get_reports():
 def get_parking_areas():
     return {"parkingareas": parkingarea_service.all_parking_areas()}
 
+
 Report = models.ReportFileModel
+
 
 @app.post("/report")
 def create_report(report: Report):
-    report_service.save_report(report.id, report.report_name, report.parking_areas, report.date)
+    report_service.save_report(
+        report.id, report.report_name, report.parking_areas, report.date
+    )
     return report
