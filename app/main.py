@@ -1,15 +1,15 @@
 from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from . import report_service, parkingarea_service, models
 import os
 import sys
-
 current = os.path.dirname(os.path.realpath(__file__))
 # Getting the parent directory name where the current directory is present.
 parent = os.path.dirname(current)
 # adding the parent directory to the sys.path.
 sys.path.append(parent)
+
+import report_service, parkingarea_service, models
 
 app = FastAPI(title="FastAPI, Docker, and Traefik")
 
