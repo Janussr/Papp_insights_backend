@@ -6,12 +6,11 @@ from app.objects import models
 
 df = pd.read_csv("app/data/papp_kgslyngby.csv", sep=";")
 
-parking_overview = models.ParkingOverview(parking_categories=[])
-
 
 def get_overview():
-    calc_top5_occupacy()
-    calc_mean_occupacy_all()
+    parking_overview = models.ParkingOverview(parking_categories=[])
+    parking_overview.parking_categories.append(calc_top5_occupacy())
+    parking_overview.parking_categories.append(calc_mean_occupacy_all())
     return parking_overview
 
 
@@ -19,7 +18,7 @@ def calc_top5_occupacy():
     df = get_occupacy_df()
     top5_dict = df.nlargest(5, "occupacy").to_dict()["occupacy"]
     parking_category = models.ParkingCategory("Top 5 Occupacy", top5_dict)
-    parking_overview.parking_categories.append(parking_category)
+    return parking_category
 
 
 def calc_mean_occupacy_all():
@@ -28,7 +27,7 @@ def calc_mean_occupacy_all():
     parking_category = models.ParkingCategory(
         "Average Occupacy in Municipality", mean_occupacy
     )
-    parking_overview.parking_categories.append(parking_category)
+    return parking_category
 
 
 def get_occupacy_df():
@@ -45,9 +44,9 @@ def get_occupacy_df():
     total_spaces = [int(space) for space in total_spaces_df["totalSpaces"].tolist()]
 
     divided = np.divide(vehicle_count, total_spaces)
-    belægningsgrad = [i * 100 for i in divided]
+    occupacy = [i * 100 for i in divided]
 
     occupacy_df = pd.DataFrame(
-        data=belægningsgrad, index=total_spaces_df["garageCode"], columns=["occupacy"]
+        data=occupacy, index=total_spaces_df["garageCode"], columns=["occupacy"]
     )
     return occupacy_df
