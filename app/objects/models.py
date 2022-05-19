@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class ReportOld:
     def __init__(self, report_name, parking_areas, time_filter=None):
         self.report_name = report_name
@@ -38,15 +39,8 @@ class ParkingArea:
 
 
 class ParkingOverview:
-    def __init__(self, booth_type, parking_categories):
-        self.booth_type = booth_type
-        self.parking_categories = []
-        for parking_category in parking_categories:
-            new_category = ParkingCategory(
-                parking_category.category_name,
-                parking_category.category_description,
-            )
-            self.parking_categories.append(new_category)
+    def __init__(self, parking_categories):
+        self.parking_categories = parking_categories
 
 
 class ParkingCategoryModel(BaseModel):
@@ -57,6 +51,10 @@ class ParkingCategoryModel(BaseModel):
 class ParkingAreaModel(BaseModel):
     name: str
     parking_category: ParkingCategoryModel
+
+
+class ParkingOverviewModel(BaseModel):
+    parking_categories: list[ParkingCategoryModel]
 
 
 class ReportModel(BaseModel):

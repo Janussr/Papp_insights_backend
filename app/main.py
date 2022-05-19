@@ -2,7 +2,7 @@ from typing import Optional
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.services import report_service, parkingarea_service
+from app.services import parking_overview_service, report_service, parkingarea_service
 from app.objects import models
 
 app = FastAPI(title="FastAPI, Docker, and Traefik")
@@ -42,8 +42,11 @@ def get_parking_areas():
     return {"parkingareas": parkingarea_service.all_parking_areas()}
 
 
-Report = models.ReportFileModel
+@app.get("/overview")
+def get_overview():
+    return {"parkingoverview": parking_overview_service.get_overview()}
 
+Report = models.ReportFileModel
 
 @app.post("/report")
 def create_report(report: Report):
