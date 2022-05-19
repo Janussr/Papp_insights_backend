@@ -3,8 +3,6 @@ import csv
 
 from app.objects import models
 
-df = pd.read_csv('app/data/papp_kgslyngby.csv', sep=";")
-
 def get_report(id):
     df = pd.read_csv('app/data/reports.csv', sep=',')
 

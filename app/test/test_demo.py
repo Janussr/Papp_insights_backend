@@ -1,6 +1,5 @@
 from app.services import report_service
 
-
 class TestClass:
     def test_calc_category(self):
         p_areas = ["O03 Nørgaardsvej 2", "P2 Kulturhuset"]
