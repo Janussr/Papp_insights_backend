@@ -1,6 +1,5 @@
 id,name,parking_areas,date
 c1756ab0-d69d-11ec-b245-25ee4d2285a7,Lyngby01,"O01-A Lyngby Torv,O06 Stades Krog,Microsoft Public",2022-01-01
 0927cc30-d69f-11ec-8ce9-5790ba8eaae1,EtGodtNavn,"O13 Kanalvej,P1 Lyngby Storcenter",2022-01-01
-494a2f40-d6a1-11ec-9cb8-e3c9ce173080,Kastanie,"Microsoft Public,O10 Kastanievej 1",2022-02-15
-58bc7ff0-d6a1-11ec-b8fc-1b1115990492,Vaffel,O06 Stades Krog,2022-02-05
-9b8005a0-d6a1-11ec-b8fc-1b1115990492,Rapportnavn,"P3 Kulturhustorvet,P4 Magasin / Fog",2022-01-12
+c77c5a20-d8f7-11ec-850b-8f0ce6bb585b,Test#1,"O01-A Lyngby Torv,Microsoft Public,O05 Gasværksvej,P3 Kulturhustorvet",2022-01-19
+d333c5b0-d8f7-11ec-850b-8f0ce6bb585b,Test#2,"O03 Nørgaardsvej 2,O07 Lyngby Kirke",2022-03-08
