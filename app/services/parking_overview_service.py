@@ -19,7 +19,7 @@ def calc_top5_occupacy():
     df = get_occupacy_df()
     top5_dict = df.nlargest(5, "occupacy").to_dict()["occupacy"]
     parking_category = models.ParkingCategory(
-        "Parkingsområder men højest belægning", top5_dict
+        "Parkingersområder men højest belægning", top5_dict
     )
     return parking_category
 
@@ -28,7 +28,7 @@ def calc_bot5_occupacy():
     df = get_occupacy_df()
     bot5_dict = df.nsmallest(5, "occupacy").to_dict()["occupacy"]
     parking_category = models.ParkingCategory(
-        "Parkingsområder med lavest belægning", bot5_dict
+        "Parkeringsområder med lavest belægning", bot5_dict
     )
     return parking_category
 
@@ -38,7 +38,7 @@ def calc_mean_occupacy_all():
     mean_occupacy = round(float(df["occupacy"].mean()), 2)
     dif = 100 - mean_occupacy
     pieData = [mean_occupacy, dif]
-    parking_category = models.ParkingCategory("Gennemsnitlig Belægningsgrad", pieData)
+    parking_category = models.ParkingCategory("Gennemsnitlig belægningsgrad", pieData)
     return parking_category
 
 
