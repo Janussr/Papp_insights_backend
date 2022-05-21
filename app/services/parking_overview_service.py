@@ -10,6 +10,7 @@ df = pd.read_csv("app/data/papp_kgslyngby.csv", sep=";")
 def get_overview():
     parking_overview = models.ParkingOverview(parking_categories=[])
     parking_overview.parking_categories.append(calc_top5_occupacy())
+    parking_overview.parking_categories.append(calc_bot5_occupacy())
     parking_overview.parking_categories.append(calc_mean_occupacy_all())
     return parking_overview
 
@@ -21,12 +22,19 @@ def calc_top5_occupacy():
     return parking_category
 
 
+def calc_bot5_occupacy():
+    df = get_occupacy_df()
+    bot5_dict = df.nsmallest(5, "occupacy").to_dict()["occupacy"]
+    parking_category = models.ParkingCategory("Bottom 5 Belægningsgrad", bot5_dict)
+    return parking_category
+
+
 def calc_mean_occupacy_all():
     df = get_occupacy_df()
     mean_occupacy = round(float(df["occupacy"].mean()), 2)
-    parking_category = models.ParkingCategory(
-        "Gennemsnitlig Belægningsgrad", mean_occupacy
-    )
+    dif = 100 - mean_occupacy
+    pieData = [mean_occupacy, dif]
+    parking_category = models.ParkingCategory("Gennemsnitlig Belægningsgrad", pieData)
     return parking_category
 
 
