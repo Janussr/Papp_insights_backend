@@ -18,14 +18,18 @@ def get_overview():
 def calc_top5_occupacy():
     df = get_occupacy_df()
     top5_dict = df.nlargest(5, "occupacy").to_dict()["occupacy"]
-    parking_category = models.ParkingCategory("Top 5 Belægningsgrad", top5_dict)
+    parking_category = models.ParkingCategory(
+        "Parkingsområder men højest belægning", top5_dict
+    )
     return parking_category
 
 
 def calc_bot5_occupacy():
     df = get_occupacy_df()
     bot5_dict = df.nsmallest(5, "occupacy").to_dict()["occupacy"]
-    parking_category = models.ParkingCategory("Bottom 5 Belægningsgrad", bot5_dict)
+    parking_category = models.ParkingCategory(
+        "Parkingsområder med lavest belægning", bot5_dict
+    )
     return parking_category
 
 
